@@ -1,0 +1,130 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/geist";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-sans: "Geist Variable", "PingFang SC", "HarmonyOS Sans SC", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  --font-heading: var(--font-sans);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --color-faint: var(--faint);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@property --tint {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #1d2030;
+}
+
+/* Single dark theme: the artwork is always the brightest thing on screen. */
+:root {
+  --ambient: color-mix(in oklch, var(--tint) 38%, var(--background));
+  transition: --tint 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+  color-scheme: dark;
+  --background: oklch(0.155 0.004 270);
+  --foreground: oklch(0.95 0.003 90);
+  --card: oklch(0.19 0.004 270);
+  --card-foreground: var(--foreground);
+  --popover: oklch(0.2 0.005 270);
+  --popover-foreground: var(--foreground);
+  --primary: oklch(0.96 0.003 90);
+  --primary-foreground: oklch(0.17 0.004 270);
+  --secondary: oklch(1 0 0 / 8%);
+  --secondary-foreground: var(--foreground);
+  --muted: oklch(1 0 0 / 6%);
+  --muted-foreground: oklch(0.72 0.006 270);
+  --faint: oklch(0.56 0.006 270);
+  --accent: oklch(1 0 0 / 9%);
+  --accent-foreground: var(--foreground);
+  --destructive: oklch(0.7 0.17 25);
+  --border: oklch(1 0 0 / 9%);
+  --input: oklch(1 0 0 / 12%);
+  --ring: oklch(0.96 0.003 90);
+  --radius: 0.75rem;
+  --tint: #1d2030;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/60;
+  }
+  html {
+    @apply font-sans;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scrollbar-gutter: stable;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "ss01", "tnum" 0;
+  }
+  ::selection {
+    background: oklch(0.96 0.003 90 / 85%);
+    color: oklch(0.17 0.004 270);
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+  img {
+    -webkit-user-drag: none;
+  }
+}
+
+@layer utilities {
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  /* PS5-style focus: a crisp white frame, offset from the artwork. */
+  .focus-frame {
+    outline: none;
+  }
+  .focus-frame:focus-visible {
+    box-shadow:
+      0 0 0 3px var(--background),
+      0 0 0 5px var(--ring);
+  }
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
